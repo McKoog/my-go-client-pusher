@@ -709,15 +709,15 @@ func TestClientGenerateConnURL(t *testing.T) {
 
 	t.Run("override", func(t *testing.T) {
 		client := &Client{
-			overrideHost: "foo.bar",
-			overridePort: 1234,
+			OverrideHost: "foo.bar",
+			OverridePort: 1234,
 		}
 
 		gotURL := client.generateConnURL("")
-		if !strings.Contains(gotURL, client.overrideHost) {
+		if !strings.Contains(gotURL, client.OverrideHost) {
 			t.Errorf("Expected connection URL to have override host, got %q", gotURL)
 		}
-		if !strings.Contains(gotURL, fmt.Sprint(client.overridePort)) {
+		if !strings.Contains(gotURL, fmt.Sprint(client.OverridePort)) {
 			t.Errorf("Expected connection URL to have override port, got %q", gotURL)
 		}
 	})
@@ -751,8 +751,8 @@ func TestClientConnect(t *testing.T) {
 
 		client := &Client{
 			Insecure:     true,
-			overrideHost: host,
-			overridePort: portNum,
+			OverrideHost: host,
+			OverridePort: portNum,
 		}
 		defer client.Disconnect()
 
@@ -793,8 +793,8 @@ func TestClientConnect(t *testing.T) {
 
 		client := &Client{
 			Insecure:     true,
-			overrideHost: host,
-			overridePort: portNum,
+			OverrideHost: host,
+			OverridePort: portNum,
 		}
 		defer client.Disconnect()
 
@@ -806,8 +806,8 @@ func TestClientConnect(t *testing.T) {
 		if client.connected != true {
 			t.Errorf("Expected client connected to be true, got false")
 		}
-		if client.socketID != wantConnData.SocketID {
-			t.Errorf("Expected client socket ID to be %v, got %v", wantConnData.SocketID, client.socketID)
+		if client.SocketID != wantConnData.SocketID {
+			t.Errorf("Expected client socket ID to be %v, got %v", wantConnData.SocketID, client.SocketID)
 		}
 		wantTimeout := time.Duration(wantConnData.ActivityTimeout) * time.Second
 		if client.activityTimeout != wantTimeout {

@@ -409,7 +409,7 @@ func TestPrivateChannelSubscribe(t *testing.T) {
 				client: &Client{
 					ws:          ws,
 					connected:   true,
-					socketID:    wantSocketID,
+					SocketID:    wantSocketID,
 					AuthURL:     authSrv.URL,
 					AuthParams:  wantParams,
 					AuthHeaders: wantHeaders,

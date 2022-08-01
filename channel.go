@@ -260,7 +260,7 @@ func (c *privateChannel) Subscribe(opts ...SubscribeOption) error {
 	}
 
 	body := url.Values{}
-	body.Set("socket_id", c.client.socketID)
+	body.Set("socket_id", c.client.SocketID)
 	body.Set("channel_name", c.name)
 	for key, vals := range c.client.AuthParams {
 		for _, val := range vals {
