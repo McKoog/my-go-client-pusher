@@ -65,7 +65,7 @@ type Client struct {
 	// by Pusher will be sent to this channel.
 	Errors chan error
 
-	socketID string
+	SocketID string
 	// TODO: make this configurable
 	activityTimeout time.Duration
 	// TODO: implement timeout logic
@@ -151,7 +151,7 @@ func (c *Client) Connect(appKey string) error {
 			return err
 		}
 		c.connected = true
-		c.socketID = connData.SocketID
+		c.SocketID = connData.SocketID
 		c.activityTimeout = time.Duration(connData.ActivityTimeout) * time.Second
 		c.activityTimer = time.NewTimer(c.activityTimeout)
 		c.boundEvents = map[string]boundEventChans{}
@@ -166,7 +166,7 @@ func (c *Client) Connect(appKey string) error {
 	}
 }
 
-func (c *Client) isConnected() bool {
+func (c *Client) IsConnected() bool {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()
 
@@ -178,7 +178,7 @@ func (c *Client) resetActivityTimer() {
 }
 
 func (c *Client) heartbeat() {
-	for c.isConnected() {
+	for c.IsConnected() {
 		select {
 		case <-c.activityTimerReset:
 			if !c.activityTimer.Stop() {
@@ -200,13 +200,13 @@ func (c *Client) sendError(err error) {
 }
 
 func (c *Client) listen() {
-	for c.isConnected() {
+	for c.IsConnected() {
 		var event Event
 		err := websocket.JSON.Receive(c.ws, &event)
 		if err != nil {
 			// If the websocket connection was closed, Receive will return an error.
 			// This is expected for an explicit disconnect.
-			if !c.isConnected() {
+			if !c.IsConnected() {
 				return
 			}
 			c.sendError(err)

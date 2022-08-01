@@ -40,13 +40,13 @@ func TestUnmarshalDataString(t *testing.T) {
 func TestClientIsConnected(t *testing.T) {
 	t.Run("false", func(t *testing.T) {
 		client := &Client{connected: false}
-		if isConnected := client.isConnected(); isConnected != false {
+		if isConnected := client.IsConnected(); isConnected != false {
 			t.Errorf("Expected isConnected to return false, got %v", isConnected)
 		}
 	})
 	t.Run("true", func(t *testing.T) {
 		client := &Client{connected: true}
-		if isConnected := client.isConnected(); isConnected != true {
+		if isConnected := client.IsConnected(); isConnected != true {
 			t.Errorf("Expected isConnected to return true, got %v", isConnected)
 		}
 	})
