@@ -200,7 +200,7 @@ func TestClientSubscribe(t *testing.T) {
 		}
 
 		channelName := "foo"
-		ch := &channel{name: channelName, subscribed: true}
+		ch := &channel{Name: channelName, subscribed: true}
 		client := &Client{
 			subscribedChannels: map[string]internalChannel{channelName: ch},
 			ws:                 ws,
@@ -260,8 +260,8 @@ func TestClientSubscribe(t *testing.T) {
 		}
 
 		baseCh := subCh.(*channel)
-		if baseCh.name != channelName {
-			t.Errorf("Expected channel name to be %q, got %q", channelName, baseCh.name)
+		if baseCh.Name != channelName {
+			t.Errorf("Expected channel name to be %q, got %q", channelName, baseCh.Name)
 		}
 	})
 
@@ -313,8 +313,8 @@ func TestClientSubscribe(t *testing.T) {
 		}
 
 		baseCh := subCh.(*privateChannel)
-		if baseCh.name != channelName {
-			t.Errorf("Expected channel name to be %q, got %q", channelName, baseCh.name)
+		if baseCh.Name != channelName {
+			t.Errorf("Expected channel name to be %q, got %q", channelName, baseCh.Name)
 		}
 	})
 
@@ -383,8 +383,8 @@ func TestClientSubscribe(t *testing.T) {
 		}
 
 		baseCh := subCh.(*presenceChannel)
-		if baseCh.name != channelName {
-			t.Errorf("Expected channel name to be %q, got %q", channelName, baseCh.name)
+		if baseCh.Name != channelName {
+			t.Errorf("Expected channel name to be %q, got %q", channelName, baseCh.Name)
 		}
 	})
 }
@@ -398,7 +398,7 @@ func TestClientUnsubscribe(t *testing.T) {
 		panic(err)
 	}
 
-	ch := &channel{name: "foo"}
+	ch := &channel{Name: "foo"}
 	client := &Client{
 		subscribedChannels: map[string]internalChannel{"foo": ch},
 		ws:                 ws,

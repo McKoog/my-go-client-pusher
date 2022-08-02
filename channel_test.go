@@ -59,7 +59,7 @@ func TestChannelSubscribe(t *testing.T) {
 		}
 
 		ch := &channel{
-			name:       wantChannel,
+			Name:       wantChannel,
 			subscribed: false,
 			client: &Client{
 				ws:        ws,
@@ -139,7 +139,7 @@ func TestChannelUnsubscribe(t *testing.T) {
 	}
 
 	ch := &channel{
-		name:       "foo",
+		Name:       "foo",
 		subscribed: true,
 		client: &Client{
 			ws: ws,
@@ -283,7 +283,7 @@ func TestChannelTrigger(t *testing.T) {
 	defer client.Disconnect()
 
 	ch := &channel{
-		name:   wantEvent.Channel,
+		Name:   wantEvent.Channel,
 		client: client,
 	}
 
@@ -404,7 +404,7 @@ func TestPrivateChannelSubscribe(t *testing.T) {
 
 		ch := &privateChannel{
 			&channel{
-				name:       wantChannel,
+				Name:       wantChannel,
 				subscribed: false,
 				client: &Client{
 					ws:          ws,

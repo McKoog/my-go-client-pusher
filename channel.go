@@ -44,7 +44,7 @@ type internalChannel interface {
 type boundDataChans map[chan json.RawMessage]chan struct{}
 
 type channel struct {
-	name        string
+	Name        string
 	boundEvents map[string]boundDataChans
 	// TODO: implement global bindings
 	// globalBindings boundDataChans
@@ -144,7 +144,7 @@ func (c *channel) Subscribe(opts ...SubscribeOption) error {
 		opt(o)
 	}
 
-	return c.sendSubscriptionRequest(channelData{Channel: c.name}, o)
+	return c.sendSubscriptionRequest(channelData{Channel: c.Name}, o)
 }
 
 func (c *channel) Unsubscribe() error {
@@ -153,7 +153,7 @@ func (c *channel) Unsubscribe() error {
 
 	c.subscribed = false
 	return c.client.SendEvent(pusherUnsubscribe, channelData{
-		Channel: c.name,
+		Channel: c.Name,
 	}, "")
 }
 
@@ -228,7 +228,7 @@ func sendDataMessage(channels boundDataChans, data json.RawMessage) {
 }
 
 func (c *channel) Trigger(event string, data interface{}) error {
-	return c.client.SendEvent(event, data, c.name)
+	return c.client.SendEvent(event, data, c.Name)
 }
 
 type privateChannel struct {
@@ -261,7 +261,7 @@ func (c *privateChannel) Subscribe(opts ...SubscribeOption) error {
 
 	body := url.Values{}
 	body.Set("socket_id", c.client.SocketID)
-	body.Set("channel_name", c.name)
+	body.Set("channel_name", c.Name)
 	for key, vals := range c.client.AuthParams {
 		for _, val := range vals {
 			body.Add(key, val)
@@ -305,7 +305,7 @@ func (c *privateChannel) Subscribe(opts ...SubscribeOption) error {
 	if err = json.NewDecoder(res.Body).Decode(&chanData); err != nil {
 		return err
 	}
-	chanData.Channel = c.name
+	chanData.Channel = c.Name
 
 	return c.sendSubscriptionRequest(chanData, o)
 }

@@ -255,7 +255,7 @@ func (c *Client) Subscribe(channelName string, opts ...SubscribeOption) (Channel
 
 	if !ok {
 		baseChan := &channel{
-			name:        channelName,
+			Name:        channelName,
 			boundEvents: map[string]boundDataChans{},
 			client:      c,
 		}
